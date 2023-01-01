@@ -19,6 +19,9 @@ package org.tensorflow.lite.examples.classification;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Typeface;
+import android.media.AudioFormat;
+import android.media.AudioManager;
+import android.media.AudioTrack;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.os.SystemClock;
 import android.util.Size;
@@ -62,7 +65,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
   private int imageSizeX;
   /** Input image size of the model along y axis. */
   private int imageSizeY;
-
+  public static float center;
   @Override
   protected int getLayoutId() {
     return R.layout.tfe_ic_camera_connection_fragment;
@@ -113,6 +116,11 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
               final List<Classifier.Recognition> results = new ArrayList<>();
 
               float[] img_array = classifier.recognizeImage(rgbFrameBitmap, sensorOrientation);
+
+//              float tone=(center-minval)/(maxval-minval);
+//              tone=(tone*5000f)+100f;
+//              float tone=(center*100f)+100f;
+//              System.out.println("tone:"+tone);
 
 
               /*
@@ -235,4 +243,6 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
     imageSizeX = classifier.getImageSizeX();
     imageSizeY = classifier.getImageSizeY();
   }
+
+
 }
