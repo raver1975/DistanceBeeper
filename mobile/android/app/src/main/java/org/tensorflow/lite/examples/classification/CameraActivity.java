@@ -580,9 +580,17 @@ public abstract class CameraActivity extends AppCompatActivity
             }
 
             canvas.drawBitmap(bitmap, null, new RectF(0, 0, canvas_size, canvas_size), null);
-            genTone(Color.red(bitmap.getPixel(bitmap.getWidth() / 2, bitmap.getHeight() / 2))*10f+50f);
-            playSound();
             textureView.unlockCanvasAndPost(canvas);
+
+            float toneleft = Color.red(bitmap.getPixel((bitmap.getWidth() / 2) - 10, bitmap.getHeight() / 2)) * 10f;//+50f;
+            float tonecenter = Color.red(bitmap.getPixel((bitmap.getWidth() / 2), bitmap.getHeight() / 2)) * 10f;//+50f;
+            float tonetop = Color.red(bitmap.getPixel((bitmap.getWidth() / 2), (bitmap.getHeight() / 2) - 10)) * 10f;//+50f;
+            float tonebottom = Color.red(bitmap.getPixel((bitmap.getWidth() / 2), (bitmap.getHeight() / 2)+10)) * 10f;//+50f;
+            float toneright = Color.red(bitmap.getPixel((bitmap.getWidth() / 2) + 10, bitmap.getHeight() / 2)) * 10f;//+50f;
+            float acg=(toneleft+tonecenter+tonetop+tonebottom+toneright)/5f;
+            genTone(acg);
+            playSound();
+//
 
         }
 
@@ -751,7 +759,7 @@ public abstract class CameraActivity extends AppCompatActivity
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT, generatedSnd.length,
                 AudioTrack.MODE_STATIC);
-        audioTrack.write(generatedSnd, 0, generatedSnd.length / 8);
+        audioTrack.write(generatedSnd, 0, generatedSnd.length / 3);
         audioTrack.play();
     }
 
